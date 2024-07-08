@@ -1,0 +1,60 @@
+.requestCard {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 16px;
+    color:#333;
+  }
+  
+  .cardHeader {
+    margin-bottom: 10px;
+    color:#428bca;
+  }
+  
+  .cardHeader h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .cardBody {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: space-between;
+  }
+  
+  .cardDate,
+  .cardUser {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+    cursor: pointer;
+    color:#007bff;
+  }
+  
+  .pagination button.active {
+    cursor: default;
+    background-color: #007bff;
+    color: #fff;
+
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
