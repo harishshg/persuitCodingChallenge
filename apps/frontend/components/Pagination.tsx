@@ -1,7 +1,7 @@
 import styles from './styles.module.css'
 const Pagination = ({ currentPage, totalPages, handlePagination }: { currentPage: number, totalPages: number, handlePagination: (page: number) => void}) => {
 
-    return (<div className={styles.pagination}>
+    return (<div className={styles.pagination} data-testid="pagination">
         <button disabled={currentPage === 1} onClick={() => handlePagination(currentPage - 1)}>
           Previous
         </button>

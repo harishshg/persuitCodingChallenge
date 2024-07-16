@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.css'
 import Card from '../components/Card'
 import Pagination from '../components/Pagination';
+import axios from 'axios';
 
-export const Requests = () => {
-
+const Requests = () => {
   const [data, setData] = useState<Array<{
     id: string;
     title: string;
@@ -15,12 +15,12 @@ export const Requests = () => {
   }>>([]);
   const [isLoading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
-  const [isError, setError]= useState<boolean>(false)
+  const [isError, setError] = useState<boolean>(false)
+
   useEffect(() => {
-    fetch('http://localhost:3001/requests?pageNumber=' + currentPage)
-      .then((res) => res.json())
+    axios('http://localhost:3001/requests?pageNumber=' + currentPage)
       .then((data) => {
-        setData(data)
+        setData(data.data)
       }).catch((err) => {
         setError(true);
       }).finally(() => {
@@ -28,19 +28,31 @@ export const Requests = () => {
       })
   }, [currentPage])
  
-  
-  if (isLoading) return   <div className={styles.loader}></div>
-  if (isError) return   <div className={styles.container}><p>Error!</p></div>
-  if (!data?.length) return   <div className={styles.container}><p>No requests</p></div>
-  return  <>
-  <div className={styles.container}>
+  if (isLoading) return <div className={styles.loader} data-testid="loader"></div>
+  if (isError) return <div className={styles.container} ><p data-testid="error">Error!</p></div>
+  if (!data?.length) return <div className={styles.container} ><p>No requests</p></div>
 
-    <div>
-      <h1 className={styles.title}>Requests List</h1>
-      {data.map(card=>
-        <Card title={card.title} author={card.author} createdAt={card.createdAt}  key={card.id}/>)}
-    </div>
-  </div>
-    <Pagination currentPage={currentPage} totalPages={10} handlePagination={(page) => setCurrentPage(page)}/>
-  </>
+  return (
+    <main className={styles.container} role="main">
+      <section >
+        <h1  className={styles.title} data-testid="title">Requests List</h1>
+        <ul className={styles.cardList} >
+          {data.map(card => (
+            <li key={card.id}>
+              <Card title={card.title} author={card.author} createdAt={card.createdAt} />
+            </li>
+          ))}
+        </ul>
+      </section>
+      <nav aria-label="Pagination">
+        <Pagination 
+          currentPage={currentPage} 
+          totalPages={10} 
+          handlePagination={(page) => setCurrentPage(page)}
+        />
+      </nav>
+    </main>
+  );
 };
+
+export default Requests;
